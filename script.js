@@ -43,20 +43,25 @@ dormData = [
 //             .addTo(pointsGroup);
 //     });
 
-var size = d3.scaleLinear()
-      .domain([200, 1100])  // What's in the data
-      .range([4, 22])  // Size in pixel
+var size = d3.scaleSqrt()
+  .domain([200, 1100])  // What's in the data, let's say it is percentage
+  .range([4, 22])
+
+// var size = d3.scaleLinear()
+//       .domain([200, 1100])  // What's in the data
+//       .range([4, 22])  // Size in pixel
 
 var Tooltip = d3.select("#mapid")
-  .append("div")
-  .attr("class", "tooltip")
-  .style("opacity", 1)
-  .style("background-color", "white")
-  .style("border", "solid")
-  .style("border-width", "2px")
-  .style("border-radius", "5px")
-  .style("padding", "5px")
-  .style("z-index", "999");
+  .select("svg")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 1)
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "2px")
+    .style("border-radius", "5px")
+    .style("padding", "5px")
+    // .style("z-index", "999");
 
 var mouseover = function(d) {
   Tooltip.style("opacity", 1)
@@ -72,22 +77,36 @@ var mouseleave = function(d) {
 }
 
 d3.select("#mapid")
-.select("svg")
-  .selectAll("myCircles")
-  .data(dormData)
-  .enter()
-  .append("circle")
+  .select("svg")
+    .selectAll("myCircles")
+    .data(dormData)
+    .enter()
+    .append("circle")
       .attr("cx", function(d){ return uwmap.latLngToLayerPoint([d.lat, d.lng]).x })
       .attr("cy", function(d){ return uwmap.latLngToLayerPoint([d.lat, d.lng]).y })
       .attr("r", function(d){ return size(d.students) })
+      .attr("class", "circle")
       .style("fill", "purple")
       .attr("stroke", "purple")
       .attr("stroke-width", 2)
       .attr("fill-opacity", .3)
-      .style("z-index", "999")
-  .on("mouseover", mouseover)
-  .on("mousemove", mousemove)
-  .on("mouseleave", mouseleave)
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+
+
+// Update function will keep circle position the same if the map changes
+// Source: d3-graph-gallery
+function update() {
+  d3.select("#mapid")
+    .select("svg")
+      .selectAll("circle")
+        .attr("cx", function(d){ return uwmap.latLngToLayerPoint([d.lat, d.lng]).x })
+        .attr("cy", function(d){ return uwmap.latLngToLayerPoint([d.lat, d.lng]).y })
+}
+
+// If the user change the map (zoom or drag), circle position updated:
+uwmap.on("moveend", update)
 
 
 
