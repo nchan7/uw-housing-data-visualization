@@ -17,6 +17,10 @@ The results of the analysis show that two dorms with the highest capacity are on
 
 On the whole, west campus still houses a majority of the students with 55% of the housing capacity split amongst 9 residences. On the other hand, there are 6 residences on north campus. 
 
+Results of the initial data visualization are shown below: 
+
+<img src="./uwcapacity.png" height = 250px width = 400px>
+
 
 ## Additional Features
 This project is not complete and some features I would like to add include: 
