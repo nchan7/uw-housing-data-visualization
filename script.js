@@ -1,4 +1,4 @@
-var uwmap = L.map('mapid').setView([47.659245, -122.302829], 15);
+var uwmap = L.map('mapid').setView([47.657496, -122.307542], 15);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -26,12 +26,16 @@ dormData = [
   {name: 'McCarty', students: 918, lat: 47.660621, lng: -122.305003},
   {name: 'McMahon', students: 1020, lat: 47.658039, lng: -122.303641},
   {name: 'Mercer_AC', students: 627, lat: 47.654412, lng: -122.317786},
-  {name: 'Nordheim', students: 451, lat: 47.665235, lng: -122.300064},
+  // {name: 'Nordheim', students: 451, lat: 47.665235, lng: -122.300064},
   {name: 'Poplar', students: 266, lat: 47.656538, lng: -122.314049},
   {name: 'Stevens', students: 507, lat: 47.654262, lng: -122.316135}, 
   {name: 'Terry', students: 268, lat: 47.655662, lng: -122.316974},
   {name: 'Willow', students: 539, lat: 47.659557, lng: -122.304436}
 ]
+
+// west - 4703
+// north - 3897
+// total - 9051
 
 // var dormGroup = L.layerGroup();
 //     dormData.forEach(function(d){
@@ -112,6 +116,10 @@ uwmap.on("moveend", update)
 
 
 // BarChart
+
+dormData.sort(function(b, a) {
+  return a.students - b.students;
+});
 
 
 var margin = {top: 30, right: 30, bottom: 70, left: 60},
